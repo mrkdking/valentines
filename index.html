@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        /* Floating hearts background */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 2rem;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 50px;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-number {
+            color: #764ba2;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+        }
+
+        .no-btn {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .no-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .photo-container {
+            margin: 30px 0;
+            display: none;
+        }
+
+        .photo-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .photo-placeholder {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .final-screen {
+            display: none;
+        }
+
+        .final-screen.active {
+            display: block;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f5576c;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .only-yes-btn {
+            display: none;
+            padding: 15px 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+            margin: 30px auto 0;
+        }
+
+        .only-yes-btn.active {
+            display: inline-block;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .emoji {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+
+    <div class="container">
+        <div id="question-screen">
+            <div class="question-number" id="questionNumber">QUESTION 1 OF 3</div>
+            <h1 id="questionText">Do you like spending time with me?</h1>
+            <div class="buttons">
+                <button class="yes-btn" onclick="nextQuestion()">Yes! 💕</button>
+                <button class="no-btn" onclick="nextQuestion()">Of course!</button>
+            </div>
+        </div>
+
+        <div id="valentine-screen" style="display: none;">
+            <div class="question-number">THE BIG QUESTION ❤️</div>
+            <div class="emoji">💝</div>
+            <h1>Will you be my Valentine?</h1>
+            <div class="buttons">
+                <button class="yes-btn" onclick="showFinal()">Yes!!! 💕</button>
+                <button class="no-btn" onclick="showRejection()">No...</button>
+            </div>
+        </div>
+
+        <div id="rejection-screen" style="display: none;">
+            <h1>Do you reject this cute fellow?</h1>
+            <div class="photo-container active">
+                <img src="photo.jpeg" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+            </div>
+            <button class="only-yes-btn active" onclick="showFinal()">No, I accept! 💕</button>
+        </div>
+
+        <div id="final-screen" class="final-screen">
+            <div class="emoji">🎉</div>
+            <div style="position: relative;">
+                <img src="photo.jpeg" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; position: absolute; top: -10px; right: -20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 3px solid white;">
+                <h1>Yay! You've made this cute fellow happy! 💕</h1>
+            </div>
+            <p style="color: #666; margin-top: 30px; font-size: 1.1rem; line-height: 1.6;">He will keep you happy lifelong ❤️</p>
+            <p style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #764ba2; margin-top: 25px;">~அவளின் அவன்</p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        const heartsContainer = document.getElementById('hearts');
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 15 + 's';
+            heart.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+            heartsContainer.appendChild(heart);
+        }
+
+        const questions = [
+            "Do you like spending time with me?",
+            "Do I make you smile?",
+            "Would you like to go on more adventures together?"
+        ];
+
+        let currentQuestion = 0;
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                document.getElementById('questionNumber').textContent = `QUESTION ${currentQuestion + 1} OF ${questions.length}`;
+                document.getElementById('questionText').textContent = questions[currentQuestion];
+                
+                // Re-trigger animation
+                const container = document.querySelector('.container');
+                container.style.animation = 'none';
+                setTimeout(() => {
+                    container.style.animation = 'slideIn 0.6s ease-out';
+                }, 10);
+            } else {
+                document.getElementById('question-screen').style.display = 'none';
+                document.getElementById('valentine-screen').style.display = 'block';
+            }
+        }
+
+        function showRejection() {
+            document.getElementById('valentine-screen').style.display = 'none';
+            document.getElementById('rejection-screen').style.display = 'block';
+        }
+
+        function showFinal() {
+            document.getElementById('question-screen').style.display = 'none';
+            document.getElementById('valentine-screen').style.display = 'none';
+            document.getElementById('rejection-screen').style.display = 'none';
+            document.getElementById('final-screen').classList.add('active');
+            
+            // Create confetti
+            createConfetti();
+        }
+
+        function createConfetti() {
+            const colors = ['#f5576c', '#f093fb', '#667eea', '#764ba2', '#ffd700'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.animation = `confetti-fall ${Math.random() * 3 + 2}s linear`;
+                    confetti.style.zIndex = '1000';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
